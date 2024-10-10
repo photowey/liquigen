@@ -14,32 +14,46 @@
  * limitations under the License.
  */
 
-package app
+package filez
 
 import (
-	"fmt"
+	"os"
 	"path/filepath"
-	"strings"
-
-	"github.com/photowey/liquigen/configs"
-	"github.com/photowey/liquigen/internal/home"
-	"github.com/photowey/liquigen/pkg/filez"
 )
 
-func onInit() {
-	home.AppHome()
-	tryLoadConfig()
+func exists(names ...string) bool {
+	_, err := os.Stat(filepath.Join(names...))
+
+	return err == nil || os.IsExist(err)
 }
 
-func tryLoadConfig() {
-	liquigenHome := home.Dir
-	configFile := filepath.Join(liquigenHome, strings.ToLower(home.LiquigenConfigFile))
+func DirExists(path string) bool {
+	return exists(path)
+}
 
-	if filez.FileExists(liquigenHome, home.LiquigenConfigFile) {
-		configs.Init(configFile)
+func FileExists(target, name string) bool {
+	return exists(target, name)
+}
 
-		return
+func FileNotExists(target, name string) bool {
+	return !FileExists(target, name)
+}
+
+func Write(filename, content string) {
+	f, err := os.Create(filename)
+	MustCheck(err)
+	defer Close(f)
+	_, err = f.WriteString(content)
+	MustCheck(err)
+}
+
+func Close(f *os.File) {
+	err := f.Close()
+	MustCheck(err)
+}
+
+func MustCheck(err error) {
+	if err != nil {
+		panic(err)
 	}
-
-	fmt.Printf("the liquigen config file not exists")
 }

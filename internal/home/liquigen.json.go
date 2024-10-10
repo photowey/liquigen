@@ -15,3 +15,22 @@
  */
 
 package home
+
+// default database: postgres
+
+const (
+	liquigenConfigJsonContent = `{
+  "database": {
+    "host": "127.0.0.1",
+    "port": 5432,
+    "dialect": "postgres",
+    "driver": "pgx",
+    "database": "postgres",
+    "username": "postgres",
+    "password": "postgres",
+    "includes": [],
+    "excludes": [],
+    "prefixes": []
+  }
+}`
+)

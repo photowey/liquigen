@@ -15,3 +15,46 @@
  */
 
 package configs
+
+import (
+	"fmt"
+	"os"
+
+	"github.com/photowey/liquigen/pkg/jsonz"
+)
+
+var _config Config
+
+type Config struct {
+	Project  Project
+	Database Database
+}
+
+type Project struct {
+	Author  string `toml:"author" json:"author" yaml:"author"`
+	Email   string `toml:"email" json:"email"`
+	Version string `toml:"version" json:"version" yaml:"version"`
+}
+
+type Database struct {
+	Host     string   `toml:"host" json:"host" yaml:"host"`
+	Port     int      `toml:"port" json:"port" yaml:"port"`
+	Dialect  string   `toml:"dialect" json:"dialect" yaml:"dialect"`
+	Driver   string   `toml:"driver" json:"driver" yaml:"driver"`
+	Database string   `toml:"database" json:"database" yaml:"database"`
+	Username string   `toml:"username" json:"username" yaml:"username"`
+	Password string   `toml:"password" json:"password" yaml:"password"`
+	Includes []string `toml:"includes" json:"includes" yaml:"includes"`
+	Excludes []string `toml:"excludes" json:"excludes" yaml:"excludes"`
+	Prefixes []string `toml:"prefixes" json:"prefixes" yaml:"prefixes"`
+}
+
+func Init(configFile string) {
+	conf, err := os.ReadFile(configFile)
+	if err != nil {
+		fmt.Printf("parse the liquigen config error:%s", err.Error())
+		return
+	}
+
+	jsonz.UnmarshalStruct(conf, &_config)
+}

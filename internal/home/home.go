@@ -15,3 +15,41 @@
  */
 
 package home
+
+import (
+	"bytes"
+	"fmt"
+	"os"
+	"os/user"
+	"path/filepath"
+	"strings"
+
+	"github.com/photowey/liquigen/pkg/filez"
+)
+
+const (
+	LiquigenConfigFile = "liquigen.json"
+)
+
+var (
+	Home   = ".liquigen"
+	Usr, _ = user.Current()
+	Dir    = filepath.Join(Usr.HomeDir, string(os.PathSeparator), Home)
+)
+
+func AppHome() {
+	liquigenHome := Dir
+	if ok := filez.DirExists(liquigenHome); !ok {
+		if err := os.MkdirAll(liquigenHome, os.ModePerm); err != nil {
+			panic(fmt.Sprintf("mkdir liquigen home dir:%s error:%v", liquigenHome, err))
+		}
+	}
+
+	if filez.FileNotExists(liquigenHome, LiquigenConfigFile) {
+		buf := bytes.NewBufferString(liquigenConfigJsonContent)
+		tomatoConfigFile := filepath.Join(liquigenHome, strings.ToLower(LiquigenConfigFile))
+		if err := os.WriteFile(tomatoConfigFile, buf.Bytes(), 0o644); err != nil {
+			panic(fmt.Sprintf("writing file %s: %v", tomatoConfigFile, err))
+		}
+	}
+}

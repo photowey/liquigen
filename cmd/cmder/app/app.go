@@ -18,8 +18,34 @@ package app
 
 import (
 	"fmt"
+	"os"
+
+	"github.com/photowey/liquigen/internal/version"
+	"github.com/spf13/cobra"
 )
 
+const (
+	LongText = "A lightweight Liquibase file generator cmd tool implemented in Golang."
+)
+
+var root = &cobra.Command{
+	Use:     "liquigen",
+	Short:   "A lightweight Liquibase changelog generator.",
+	Long:    LongText,
+	Version: version.Now(),
+	Run: func(cmd *cobra.Command, args []string) {
+		fmt.Printf("Welcome to liquigen cmder %s~", version.Now())
+	},
+}
+
+func init() {
+	cobra.OnInitialize(onInit)
+	root.AddCommand(changelogCmd)
+}
+
 func Run() {
-	fmt.Println("Hello, Liquibase gen!")
+	if err := root.Execute(); err != nil {
+		_, _ = fmt.Fprintln(os.Stderr, err)
+		os.Exit(1)
+	}
 }
