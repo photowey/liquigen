@@ -1,2 +1,3 @@
-# liquigen
-A lightweight Liquibase file generator cmd tool implemented in Golang.
+# `liquigen`
+
+A lightweight `Liquibase` file generator cmd tool implemented in Golang.
