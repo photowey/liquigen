@@ -30,5 +30,6 @@ type Args struct {
 
 	Format string
 
-	SQL string
+	SQLFile string
+	SQL     string
 }

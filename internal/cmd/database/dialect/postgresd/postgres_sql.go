@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package postgres
+package postgresd
 
 const (
 	DsnTemplate = "postgresql://%s:%s@%s:%d/%s?TimeZone=%s"

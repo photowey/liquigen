@@ -14,4 +14,8 @@
  * limitations under the License.
  */
 
-package mysqlc
+package mysqld
+
+func MySQL() {
+	panic("not implemented")
+}

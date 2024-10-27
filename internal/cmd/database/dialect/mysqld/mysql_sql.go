@@ -14,8 +14,4 @@
  * limitations under the License.
  */
 
-package postgres
-
-func MySQL() {
-	panic("not implemented")
-}
+package mysqld

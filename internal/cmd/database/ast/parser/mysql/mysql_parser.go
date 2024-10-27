@@ -22,15 +22,15 @@ import (
 
 	"github.com/photowey/liquigen/internal/cmd/database"
 	"github.com/photowey/liquigen/internal/cmd/database/ast"
-	"github.com/photowey/liquigen/internal/cmd/database/lexer"
-	"github.com/photowey/liquigen/internal/cmd/database/parser"
+	"github.com/photowey/liquigen/internal/cmd/database/ast/lexer"
+	"github.com/photowey/liquigen/internal/cmd/database/ast/parser"
 	"github.com/photowey/liquigen/pkg/stringz"
 )
 
 // ----------------------------------------------------------------
 
 const (
-	Dialect = "mysql"
+	Dialect = "mysqld"
 
 	CreateTableStatement = "CREATE TABLE"
 )

@@ -67,7 +67,7 @@ func populateArgs() *changelog.Args {
 		Dialect:  dialect,
 		Database: database,
 		Format:   format,
-		SQL:      sqlFile,
+		SQLFile:  sqlFile,
 	}
 }
 

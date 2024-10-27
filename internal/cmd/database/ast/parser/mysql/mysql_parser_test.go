@@ -109,7 +109,7 @@ create table if not exists company.employee
 		wantErr bool
 	}{
 		{
-			name: "Test mysql parser#Parse()",
+			name: "Test mysqld parser#Parse()",
 			args: args{
 				sql: sql,
 			},
@@ -139,7 +139,7 @@ create table if not exists company.employee
 			wantErr: false,
 		},
 		{
-			name: "Test mysql parser#Parse()_bad_sql",
+			name: "Test mysqld parser#Parse()_bad_sql",
 			args: args{
 				sql: badSql,
 			},
@@ -151,7 +151,7 @@ create table if not exists company.employee
 			wantErr: true,
 		},
 		{
-			name: "Test mysql parser#Parse()_comment_sql",
+			name: "Test mysqld parser#Parse()_comment_sql",
 			args: args{
 				sql: commentSql,
 			},

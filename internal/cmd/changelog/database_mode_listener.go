@@ -20,23 +20,6 @@ import (
 	"fmt"
 )
 
-func OnSQLMode(args *Args) {
-	fmt.Printf("sql mode: the Author: [%s]\n", args.Author)
-	fmt.Printf("sql mode: the Email: [%s]\n", args.Email)
-	fmt.Printf("sql mode: the Version: [%s]\n", args.Version)
-
-	fmt.Printf("sql mode: the Host: [%s]\n", args.Host)
-	fmt.Printf("sql mode: the Post: [%d]\n", args.Port)
-	fmt.Printf("sql mode: the Username: [%s]\n", args.Username)
-	fmt.Printf("sql mode: the Password: [%s]\n", args.Password)
-	fmt.Printf("sql mode: the Dialect: [%s]\n", args.Dialect)
-	fmt.Printf("sql mode: the Database name: [%s]\n", args.Database)
-
-	fmt.Printf("sql mode: the Format: [%s]\n", args.Format)
-
-	fmt.Printf("sql mode: the sqlFile: [%s]\n", args.SQL)
-}
-
 func OnDatabaseMode(args *Args) {
 	fmt.Printf("database mode: the Author: [%s]\n", args.Author)
 	fmt.Printf("database mode: the Email: [%s]\n", args.Email)
@@ -51,5 +34,5 @@ func OnDatabaseMode(args *Args) {
 
 	fmt.Printf("database mode: the Format: [%s]\n", args.Format)
 
-	fmt.Printf("database mode: the sqlFile: [%s]\n", args.SQL)
+	fmt.Printf("database mode: the sqlFile: [%s]\n", args.SQLFile)
 }

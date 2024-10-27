@@ -17,7 +17,7 @@
 package ast
 
 import (
-	"github.com/photowey/liquigen/internal/cmd/database/lexer"
+	"github.com/photowey/liquigen/internal/cmd/database/ast/lexer"
 )
 
 type Token struct {

@@ -39,6 +39,7 @@ func SplitSQLStatements(sql string) []string {
 
 	if buf.Len() > 0 {
 		stmt := buf.String()
+		// \n
 		if len(strings.TrimSpace(stmt)) > 0 {
 			statements = append(statements, stmt)
 		}

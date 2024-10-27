@@ -14,8 +14,20 @@
  * limitations under the License.
  */
 
-package mysqlc
+package mysql
 
-func MySQL() {
-	panic("not implemented")
+import (
+	"strings"
+
+	"github.com/photowey/liquigen/internal/cmd/database/ast/lexer"
+)
+
+func TestIsMySQLDataType(word string) bool {
+	for _, it := range lexer.MySQLDataTypes {
+		if strings.ToUpper(word) == it {
+			return true
+		}
+	}
+
+	return false
 }

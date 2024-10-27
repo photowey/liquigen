@@ -16,7 +16,7 @@
 
 package home
 
-// default database: postgres
+// default database: postgresd
 
 const (
 	liquigenConfigJsonContent = `{
@@ -24,14 +24,14 @@ const (
     "author": "hello",
     "email": "hello@example.com",
     "version": "1.0.0",
-    "dialect": "mysql",
+    "dialect": "mysqld",
     "sql": ""
   },
   "database": {
     "host": "127.0.0.1",
     "port": 3306,
-    "dialect": "mysql",
-    "driver": "mysql",
+    "dialect": "mysqld",
+    "driver": "mysqld",
     "database": "hello_world",
     "username": "root",
     "password": "root",

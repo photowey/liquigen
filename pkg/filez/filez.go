@@ -17,6 +17,7 @@
 package filez
 
 import (
+	"fmt"
 	"os"
 	"path/filepath"
 )
@@ -56,4 +57,19 @@ func MustCheck(err error) {
 	if err != nil {
 		panic(err)
 	}
+}
+
+func Clean(path string) (string, error) {
+	if filepath.IsAbs(path) {
+		return filepath.Clean(path), nil
+	}
+
+	cwd, err := os.Getwd()
+	if err != nil {
+		return "", fmt.Errorf("get current working directory failed: %v", err)
+	}
+
+	fullPath := filepath.Join(cwd, path)
+
+	return filepath.Clean(fullPath), nil
 }

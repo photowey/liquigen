@@ -14,4 +14,8 @@
  * limitations under the License.
  */
 
-package sqlite
+package sqlited
+
+func Run() {
+	panic("not implemented")
+}

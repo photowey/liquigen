@@ -14,8 +14,25 @@
  * limitations under the License.
  */
 
-package sqlite
+package postgres
 
-func Run() {
-	panic("not implemented")
+import (
+	"github.com/photowey/liquigen/internal/cmd/database/ast"
+	"github.com/photowey/liquigen/internal/cmd/database/ast/parser"
+)
+
+const (
+	Dialect = "postgresd"
+)
+
+var _ parser.Parser = (*Parser)(nil)
+
+type Parser struct{}
+
+func (p Parser) Dialect() string {
+	return Dialect
+}
+
+func (p Parser) Parse(sql string) (ast.Database, error) {
+	panic("implement me")
 }

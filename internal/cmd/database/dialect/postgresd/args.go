@@ -14,25 +14,8 @@
  * limitations under the License.
  */
 
-package postgres
+package postgresd
 
-import (
-	"github.com/photowey/liquigen/internal/cmd/database/ast"
-	"github.com/photowey/liquigen/internal/cmd/database/parser"
-)
-
-const (
-	Dialect = "postgres"
-)
-
-var _ parser.Parser = (*Parser)(nil)
-
-type Parser struct{}
-
-func (p Parser) Dialect() string {
-	return Dialect
-}
-
-func (p Parser) Parse(sql string) (ast.Database, error) {
-	panic("implement me")
+func MySQL() {
+	panic("not implemented")
 }

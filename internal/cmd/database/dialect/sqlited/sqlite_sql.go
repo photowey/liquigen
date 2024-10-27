@@ -14,20 +14,4 @@
  * limitations under the License.
  */
 
-package mysql
-
-import (
-	"strings"
-
-	"github.com/photowey/liquigen/internal/cmd/database/lexer"
-)
-
-func TestIsMySQLDataType(word string) bool {
-	for _, it := range lexer.MySQLDataTypes {
-		if strings.ToUpper(word) == it {
-			return true
-		}
-	}
-
-	return false
-}
+package sqlited
