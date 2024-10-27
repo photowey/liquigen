@@ -14,4 +14,39 @@
  * limitations under the License.
  */
 
-package database
+package stringz
+
+import (
+	"runtime"
+	"strings"
+)
+
+// ----------------------------------------------------------------
+
+func IsWindows() bool {
+	goos := GetOS()
+	return strings.HasPrefix(strings.ToLower(goos), "windows")
+}
+
+func IsLinux() bool {
+	goos := GetOS()
+	return strings.HasPrefix(strings.ToLower(goos), "linux")
+}
+
+func IsMacOS() bool {
+	goos := GetOS()
+	return strings.HasPrefix(strings.ToLower(goos), "macos")
+}
+
+func GetOS() string {
+	switch os := runtime.GOOS; os {
+	case "windows":
+		return "Windows"
+	case "linux":
+		return "Linux"
+	case "darwin":
+		return "MacOS"
+	default:
+		return "Unknown"
+	}
+}

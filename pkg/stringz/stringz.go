@@ -19,7 +19,6 @@ package stringz
 import (
 	"fmt"
 	"os"
-	"runtime"
 	"strings"
 )
 
@@ -111,10 +110,66 @@ func ToProjectPath(content string) string {
 	return ToPath(content, "-")
 }
 
-func isWindows() bool {
-	goos := runtime.GOOS
-	if strings.HasPrefix(strings.ToLower(goos), "windows") {
-		return true
+// ----------------------------------------------------------------
+
+func Fields(source string) []string {
+	var tokens []string
+	var current []rune
+
+	insideQuotes := false
+	quoteChar := rune(0)
+
+	for _, ch := range source {
+		if insideQuotes {
+			if ch == quoteChar {
+				insideQuotes = false
+				current = append(current, ch)
+				tokens = append(tokens, string(current))
+				current = []rune{}
+			} else {
+				current = append(current, ch)
+			}
+		} else {
+			switch ch {
+			case ' ', '\t', '\n', '\r':
+				if len(current) > 0 {
+					tokens = append(tokens, string(current))
+					current = []rune{}
+				}
+			case '(', ')', ',', ';', '=':
+				if len(current) > 0 {
+					tokens = append(tokens, string(current))
+					current = []rune{}
+				}
+				tokens = append(tokens, string(ch))
+			case '\'', '"':
+				if len(current) > 0 {
+					tokens = append(tokens, string(current))
+					current = []rune{}
+				}
+				insideQuotes = true
+				quoteChar = ch
+				current = append(current, ch)
+			default:
+				current = append(current, ch)
+			}
+		}
 	}
-	return false
+
+	if len(current) > 0 {
+		tokens = append(tokens, string(current))
+	}
+
+	return tokens
+}
+
+// RemoveQuotes removes quotes from a string.
+func RemoveQuotes(source string) string {
+	if (strings.HasPrefix(source, "'") && strings.HasSuffix(source, "'")) ||
+		(strings.HasPrefix(source, "\"") && strings.HasSuffix(source, "\"")) ||
+		(strings.HasPrefix(source, "`") && strings.HasSuffix(source, "`")) {
+		return source[1 : len(source)-1]
+	}
+
+	return source
 }
