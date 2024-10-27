@@ -20,6 +20,8 @@ import (
 	"fmt"
 )
 
+// ----------------------------------------------------------------
+
 func OnDatabaseMode(args *Args) {
 	fmt.Printf("database mode: the Author: [%s]\n", args.Author)
 	fmt.Printf("database mode: the Email: [%s]\n", args.Email)

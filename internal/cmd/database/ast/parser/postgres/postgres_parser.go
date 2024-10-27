@@ -22,17 +22,39 @@ import (
 )
 
 const (
-	Dialect = "postgresd"
+	Dialect = "postgres"
 )
+
+// ----------------------------------------------------------------
 
 var _ parser.Parser = (*Parser)(nil)
 
-type Parser struct{}
+// ----------------------------------------------------------------
+
+func init() {
+	parser.Register(NewParser())
+}
+
+// ----------------------------------------------------------------
+
+type Parser struct {
+	dialect string
+}
+
+// ----------------------------------------------------------------
+
+func NewParser() parser.Parser {
+	return &Parser{
+		dialect: Dialect,
+	}
+}
+
+// ----------------------------------------------------------------
 
 func (p Parser) Dialect() string {
 	return Dialect
 }
 
-func (p Parser) Parse(sql string) (ast.Database, error) {
+func (p Parser) Parse(_ string) (*ast.Ast, error) {
 	panic("implement me")
 }

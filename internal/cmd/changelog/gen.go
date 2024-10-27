@@ -14,14 +14,7 @@
  * limitations under the License.
  */
 
-package main
+package changelog
 
-import (
-	App "github.com/photowey/liquigen/cmd/cmder/app"
-	_ "github.com/photowey/liquigen/internal/cmd/database/ast/parser/mysql"
-	_ "github.com/photowey/liquigen/internal/cmd/database/ast/parser/postgres"
-)
-
-func main() {
-	App.Run()
+func gen(args *Args) {
 }

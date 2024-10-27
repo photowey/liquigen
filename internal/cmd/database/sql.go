@@ -17,8 +17,28 @@
 package database
 
 import (
+	"regexp"
 	"strings"
 )
+
+func RemoveComments(sql string) string {
+	// /*...*/
+	reMultiLine := regexp.MustCompile(`(?s)/\*.*?\*/`)
+	sql = reMultiLine.ReplaceAllString(sql, "")
+
+	// --
+	reSingleLine := regexp.MustCompile(`--.*`)
+	sql = reSingleLine.ReplaceAllString(sql, "")
+
+	// \n
+	sql = strings.ReplaceAll(sql, "\n", " ")
+
+	// Space
+	reSpaces := regexp.MustCompile(`\s+`)
+	sql = reSpaces.ReplaceAllString(sql, " ")
+
+	return strings.TrimSpace(sql)
+}
 
 func SplitSQLStatements(sql string) []string {
 	var statements []string

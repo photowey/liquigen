@@ -30,7 +30,7 @@ import (
 // ----------------------------------------------------------------
 
 const (
-	Dialect = "mysqld"
+	Dialect = "mysql"
 
 	CreateTableStatement = "CREATE TABLE"
 )
@@ -65,11 +65,11 @@ func (p Parser) Dialect() string {
 	return p.dialect
 }
 
-func (p Parser) Parse(_ string) (ast.Database, error) {
-	return ast.Database{}, nil
+func (p Parser) Parse(sql string) (*ast.Ast, error) {
+	return parse(sql)
 }
 
-func Parse(sql string) (*ast.Ast, error) {
+func parse(sql string) (*ast.Ast, error) {
 	db, statements, err := parseSQL(sql)
 	if err != nil {
 		return nil, err
@@ -83,17 +83,20 @@ func Parse(sql string) (*ast.Ast, error) {
 }
 
 func parseSQL(sql string) (*ast.Database, []string, error) {
+	sql = database.RemoveComments(sql)
 	statements := database.SplitSQLStatements(sql)
+
 	var tables []*ast.Table
 
 	for _, statement := range statements {
 		statement = strings.TrimSpace(statement)
-		if stringz.IsBlankString(statement) ||
-			!strings.Contains(strings.ToUpper(statement), CreateTableStatement) {
+		if stringz.IsBlankString(statement) {
 			continue
 		}
 
-		// if strings.HasPrefix(strings.ToUpper(statement), CreateTableStatement) {}
+		if !strings.HasPrefix(strings.ToUpper(statement), CreateTableStatement) {
+			return nil, nil, errors.New("bad create table SQL statements")
+		}
 
 		tokenizer, err := tryTokenize(statement)
 		if err != nil {

@@ -21,6 +21,8 @@ import (
 	"text/template"
 )
 
+// ----------------------------------------------------------------
+
 func parseTmpl(tmpl string, ctx *Column) ([]byte, error) {
 	tmp, err := template.New("").Parse(tmpl)
 	if err != nil {

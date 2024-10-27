@@ -16,10 +16,18 @@
 
 package changelog
 
+import (
+	"github.com/photowey/liquigen/internal/cmd/database/ast"
+)
+
+// ----------------------------------------------------------------
+
 type Args struct {
 	Author  string
 	Email   string
 	Version string
+	Cwd     string
+	Path    string
 
 	Host     string
 	Port     int
@@ -32,4 +40,5 @@ type Args struct {
 
 	SQLFile string
 	SQL     string
+	Ast     *ast.Ast
 }

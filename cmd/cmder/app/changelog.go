@@ -17,6 +17,9 @@
 package app
 
 import (
+	"fmt"
+	"os"
+
 	"github.com/photowey/liquigen/internal/cmd/changelog"
 	"github.com/photowey/liquigen/pkg/stringz"
 	"github.com/spf13/cobra"
@@ -42,7 +45,10 @@ var (
 		Aliases: []string{"chg", "chlog"},
 		Short:   "Generate Database changelogs",
 		Run: func(cmd *cobra.Command, args []string) {
-			argz := populateArgs()
+			argz, err := populateArgs()
+			if err != nil {
+				panic(err)
+			}
 
 			if stringz.IsNotBlankString(sqlFile) {
 				changelog.OnSQLMode(argz)
@@ -55,11 +61,18 @@ var (
 	}
 )
 
-func populateArgs() *changelog.Args {
+func populateArgs() (*changelog.Args, error) {
+	cwd, err := os.Getwd()
+	if err != nil {
+		return nil, fmt.Errorf("get current working directory failed: %v", err)
+	}
+
 	return &changelog.Args{
 		Author:   author,
 		Email:    email,
 		Version:  changeSetVersion,
+		Cwd:      cwd,
+		Path:     cwd,
 		Host:     host,
 		Port:     port,
 		Username: username,
@@ -68,7 +81,7 @@ func populateArgs() *changelog.Args {
 		Database: database,
 		Format:   format,
 		SQLFile:  sqlFile,
-	}
+	}, nil
 }
 
 func init() {

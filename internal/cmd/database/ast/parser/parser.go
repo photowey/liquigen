@@ -31,7 +31,7 @@ var (
 
 type Parser interface {
 	Dialect() string
-	Parse(string) (ast.Database, error)
+	Parse(string) (*ast.Ast, error)
 }
 
 type Registry interface {

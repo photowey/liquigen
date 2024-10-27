@@ -24,7 +24,7 @@ import (
 	_ "github.com/pingcap/tidb/pkg/parser/test_driver"
 )
 
-func TestParser_Parse(t *testing.T) {
+func TestParser_parse(t *testing.T) {
 	sql := `create table if not exists company.employee
 (
     id          bigint                              not null comment 'AAAA' primary key,
@@ -109,7 +109,7 @@ create table if not exists company.employee
 		wantErr bool
 	}{
 		{
-			name: "Test mysqld parser#Parse()",
+			name: "Test mysql parser#Parse()",
 			args: args{
 				sql: sql,
 			},
@@ -139,7 +139,7 @@ create table if not exists company.employee
 			wantErr: false,
 		},
 		{
-			name: "Test mysqld parser#Parse()_bad_sql",
+			name: "Test mysql parser#Parse()_bad_sql",
 			args: args{
 				sql: badSql,
 			},
@@ -151,7 +151,7 @@ create table if not exists company.employee
 			wantErr: true,
 		},
 		{
-			name: "Test mysqld parser#Parse()_comment_sql",
+			name: "Test mysql parser#Parse()_comment_sql",
 			args: args{
 				sql: commentSql,
 			},
@@ -165,29 +165,39 @@ create table if not exists company.employee
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			got, err := Parse(tt.args.sql)
+			got, err := parse(tt.args.sql)
 			if (err != nil) != tt.wantErr {
 				t.Errorf("Parse() error = %v, wantErr %v", err, tt.wantErr)
+
 				return
 			}
 
-			if !reflect.DeepEqual(tt.want.Database.Name, got.Database.Name) {
-				t.Errorf("Parse() got = %v, want %v", got.Database.Name, tt.want.Database.Name)
-			}
+			if got != nil {
+				if got.Database == nil {
+					t.Errorf("Parse() got database is nil")
 
-			for i, it := range got.Database.Tables {
-				tbi := tt.want.Database.Tables[i]
-				if !reflect.DeepEqual(it.Database, tbi.Database) {
-					t.Errorf("Parse() got.table.Database = %v, want %v", got, tt.want)
+					return
 				}
-				if !reflect.DeepEqual(it.Name, tbi.Name) {
-					t.Errorf("Parse() got.table.Name = %v, want %v", got, tt.want)
-				}
-				if !reflect.DeepEqual(it.Comment, tbi.Comment) {
-					t.Errorf("Parse() got.table.Comment = %v, want %v", got, tt.want)
+				if !reflect.DeepEqual(tt.want.Database.Name, got.Database.Name) {
+					t.Errorf("Parse() got database name = %v, want database name = %v", got.Database.Name, tt.want.Database.Name)
+
+					return
 				}
 
-				// ...
+				for i, it := range got.Database.Tables {
+					tbi := tt.want.Database.Tables[i]
+					if !reflect.DeepEqual(it.Database, tbi.Database) {
+						t.Errorf("Parse() got.table.Database = %v, want %v", got, tt.want)
+					}
+					if !reflect.DeepEqual(it.Name, tbi.Name) {
+						t.Errorf("Parse() got.table.Name = %v, want %v", got, tt.want)
+					}
+					if !reflect.DeepEqual(it.Comment, tbi.Comment) {
+						t.Errorf("Parse() got.table.Comment = %v, want %v", got, tt.want)
+					}
+
+					// ...
+				}
 			}
 		})
 	}

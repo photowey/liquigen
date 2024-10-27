@@ -16,6 +16,8 @@
 
 package changelog
 
+// ----------------------------------------------------------------
+
 const (
 	PrimaryColumn = `<column name="{{ .Name }}" type="${type.{{ .Type }}}" remarks="{{ .Comment }}" autoIncrement="{{ .AutoIncrement }}">
                 <constraints primaryKey="true" nullable="false"/>

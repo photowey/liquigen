@@ -16,6 +16,8 @@
 
 package changelog
 
+// ----------------------------------------------------------------
+
 type Context struct {
 	Author  string
 	Version string

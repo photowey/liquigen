@@ -64,3 +64,11 @@ func Init(configFile string) {
 func Configs() Config {
 	return _config
 }
+
+func ConfigProject() Project {
+	return _config.Project
+}
+
+func ConfigDatabase() Database {
+	return _config.Database
+}
