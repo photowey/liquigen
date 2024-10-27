@@ -16,6 +16,22 @@
 
 package app
 
+import (
+	"fmt"
+
+	"github.com/photowey/liquigen/internal/version"
+	"github.com/spf13/cobra"
+)
+
+var versionCmd = &cobra.Command{
+	Use:     "version",
+	Aliases: []string{"ver"},
+	Short:   "Show liquigen version.",
+	Run: func(cmd *cobra.Command, args []string) {
+		Version()
+	},
+}
+
 func Version() {
-	panic("not implemented")
+	fmt.Printf("Welcome to liquigen, version:%s\n", version.Now())
 }

@@ -26,14 +26,16 @@ import (
 var _config Config
 
 type Config struct {
-	Project  Project
-	Database Database
+	Project  Project  `toml:"project" json:"project" yaml:"project"`
+	Database Database `toml:"database" json:"database" yaml:"database"`
 }
 
 type Project struct {
 	Author  string `toml:"author" json:"author" yaml:"author"`
 	Email   string `toml:"email" json:"email"`
 	Version string `toml:"version" json:"version" yaml:"version"`
+	Dialect string `toml:"dialect" json:"dialect" yaml:"dialect"`
+	SQL     string `toml:"sql" json:"sql" yaml:"sql"`
 }
 
 type Database struct {
@@ -57,4 +59,8 @@ func Init(configFile string) {
 	}
 
 	jsonz.UnmarshalStruct(conf, &_config)
+}
+
+func Configs() Config {
+	return _config
 }

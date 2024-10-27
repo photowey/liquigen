@@ -20,14 +20,21 @@ package home
 
 const (
 	liquigenConfigJsonContent = `{
+  "project": {
+    "author": "hello",
+    "email": "hello@example.com",
+    "version": "1.0.0",
+    "dialect": "mysql",
+    "sql": ""
+  },
   "database": {
     "host": "127.0.0.1",
-    "port": 5432,
-    "dialect": "postgres",
-    "driver": "pgx",
-    "database": "postgres",
-    "username": "postgres",
-    "password": "postgres",
+    "port": 3306,
+    "dialect": "mysql",
+    "driver": "mysql",
+    "database": "hello_world",
+    "username": "root",
+    "password": "root",
     "includes": [],
     "excludes": [],
     "prefixes": []

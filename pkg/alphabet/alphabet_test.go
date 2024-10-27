@@ -30,14 +30,14 @@ func TestCamelCase(t *testing.T) {
 		want string
 	}{
 		{
-			name: "Test CamelCase()-Snake",
+			name: "Test CamelCase()_Snake",
 			args: args{
 				src: "hello_world",
 			},
 			want: "hello_world",
 		},
 		{
-			name: "Test CamelCase()-Pascal",
+			name: "Test CamelCase()_Pascal",
 			args: args{
 				src: "HelloWorld",
 			},
@@ -63,14 +63,14 @@ func TestPascalCase(t *testing.T) {
 		want string
 	}{
 		{
-			name: "Test PascalCase()-Snake",
+			name: "Test PascalCase()_Snake",
 			args: args{
 				src: "hello_world",
 			},
 			want: "Hello_world",
 		},
 		{
-			name: "Test PascalCase()-Pascal",
+			name: "Test PascalCase()_Pascal",
 			args: args{
 				src: "helloWorld",
 			},
@@ -96,14 +96,14 @@ func TestSnakeCase(t *testing.T) {
 		want string
 	}{
 		{
-			name: "Test SnakeCase()-Pascal",
+			name: "Test SnakeCase()_Pascal",
 			args: args{
 				src: "HelloWorld",
 			},
 			want: "hello_world",
 		},
 		{
-			name: "Test SnakeCase()-Camel",
+			name: "Test SnakeCase()_Camel",
 			args: args{
 				src: "helloWorld",
 			},
@@ -184,10 +184,10 @@ func TestCleanTableComment(t *testing.T) {
 		{
 			name: "clean table comment",
 			args: args{
-				comment:   "商户(merchant)",
+				comment:   "Merchant(merchant)",
 				tableName: "merchant",
 			},
-			want: "商户",
+			want: "Merchant",
 		},
 	}
 	for _, tt := range tests {

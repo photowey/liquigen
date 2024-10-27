@@ -41,6 +41,9 @@ var root = &cobra.Command{
 func init() {
 	cobra.OnInitialize(onInit)
 	root.AddCommand(changelogCmd)
+	root.AddCommand(configCmd)
+	root.AddCommand(usageCmd)
+	root.AddCommand(versionCmd)
 }
 
 func Run() {

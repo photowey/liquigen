@@ -17,45 +17,74 @@
 package app
 
 import (
-	"fmt"
-
+	"github.com/photowey/liquigen/internal/cmd/changelog"
+	"github.com/photowey/liquigen/pkg/stringz"
 	"github.com/spf13/cobra"
 )
 
 var (
+	author           string
+	email            string
+	changeSetVersion string
+
 	host     string
-	port     int32
+	port     int
 	username string
 	password string
 	dialect  string
 	database string
 	format   string
-	author   string
+
+	sqlFile string
 
 	changelogCmd = &cobra.Command{
 		Use:     "changelog",
-		Aliases: []string{"ch", "chge"},
+		Aliases: []string{"chg", "chlog"},
 		Short:   "Generate Database changelogs",
 		Run: func(cmd *cobra.Command, args []string) {
-			fmt.Printf("the Host: [%s]\n", host)
-			fmt.Printf("the Post: [%d]\n", port)
-			fmt.Printf("the Username: [%s]\n", username)
-			fmt.Printf("the Password: [%s]\n", password)
-			fmt.Printf("the Dialect: [%s]\n", dialect)
-			fmt.Printf("the Database name: [%s]\n", database)
-			fmt.Printf("the Format: [%s]\n", format)
-			fmt.Printf("the Author: [%s]\n", author)
+			argz := populateArgs()
+
+			if stringz.IsNotBlankString(sqlFile) {
+				changelog.OnSQLMode(argz)
+
+				return
+			}
+
+			changelog.OnDatabaseMode(argz)
 		},
 	}
 )
 
+func populateArgs() *changelog.Args {
+	return &changelog.Args{
+		Author:   author,
+		Email:    email,
+		Version:  changeSetVersion,
+		Host:     host,
+		Port:     port,
+		Username: username,
+		Password: password,
+		Dialect:  dialect,
+		Database: database,
+		Format:   format,
+		SQL:      sqlFile,
+	}
+}
+
 func init() {
-	changelogCmd.PersistentFlags().StringVarP(&host, "host", "H", "127.0.0.1", "Target database host")
-	changelogCmd.PersistentFlags().Int32VarP(&port, "port", "P", 5432, "Target database port")
-	changelogCmd.PersistentFlags().StringVarP(&username, "username", "u", "root", "Target database authentication username")
-	changelogCmd.PersistentFlags().StringVarP(&password, "password", "p", "root", "Target database authentication password")
-	changelogCmd.PersistentFlags().StringVarP(&dialect, "dialect", "D", "mysql", "Target database dialect")
-	changelogCmd.PersistentFlags().StringVarP(&database, "database", "d", "hello_world", "Target database name")
-	changelogCmd.PersistentFlags().StringVarP(&dialect, "format", "f", "xml", "Target database changelog format")
-	changelogCmd.PersistentFlags().StringVarP(&author, "author", "a", "admin", "Author")
+	changelogCmd.PersistentFlags().StringVarP(&author, "author", "a", "", "Author")
+	changelogCmd.PersistentFlags().StringVarP(&email, "email", "e", "", "Email")
+	changelogCmd.PersistentFlags().StringVarP(&changeSetVersion, "version", "V", "", "Change set version")
+
+	// Database mode
+	changelogCmd.PersistentFlags().StringVarP(&host, "host", "H", "", "Target database host")
+	changelogCmd.PersistentFlags().IntVarP(&port, "port", "P", 0, "Target database port")
+	changelogCmd.PersistentFlags().StringVarP(&username, "username", "u", "", "Target database authentication username")
+	changelogCmd.PersistentFlags().StringVarP(&password, "password", "p", "", "Target database authentication password")
+	changelogCmd.PersistentFlags().StringVarP(&dialect, "dialect", "D", "", "Target database dialect")
+	changelogCmd.PersistentFlags().StringVarP(&database, "database", "d", "", "Target database name")
+	changelogCmd.PersistentFlags().StringVarP(&dialect, "format", "f", "", "Target database changelog format")
+
+	// SQL file mode
+	changelogCmd.PersistentFlags().StringVarP(&sqlFile, "sql", "s", "", "SQL file")
 }

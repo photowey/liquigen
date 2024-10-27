@@ -16,6 +16,20 @@
 
 package app
 
+import (
+	"github.com/photowey/liquigen/internal/config"
+	"github.com/spf13/cobra"
+)
+
+var configCmd = &cobra.Command{
+	Use:     "config",
+	Aliases: []string{"conf"},
+	Short:   "Show liquigen configuration(~/.liquigen/liquigen.json).",
+	Run: func(cmd *cobra.Command, args []string) {
+		Config()
+	},
+}
+
 func Config() {
-	panic("not implemented")
+	config.Show()
 }

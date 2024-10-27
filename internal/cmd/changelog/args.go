@@ -14,23 +14,21 @@
  * limitations under the License.
  */
 
-package app
+package changelog
 
-import (
-	"fmt"
+type Args struct {
+	Author  string
+	Email   string
+	Version string
 
-	"github.com/spf13/cobra"
-)
+	Host     string
+	Port     int
+	Username string
+	Password string
+	Dialect  string
+	Database string
 
-var usageCmd = &cobra.Command{
-	Use:     "usage",
-	Aliases: []string{"us"},
-	Short:   "Show usage information about liquigen.",
-	Run: func(cmd *cobra.Command, args []string) {
-		Usage()
-	},
-}
+	Format string
 
-func Usage() {
-	fmt.Println("Hello, usage~")
+	SQL string
 }

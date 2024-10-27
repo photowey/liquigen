@@ -15,3 +15,16 @@
  */
 
 package config
+
+import (
+	"fmt"
+
+	"github.com/photowey/liquigen/configs"
+	"github.com/photowey/liquigen/pkg/jsonz"
+)
+
+func Show() {
+	conf := configs.Configs()
+
+	fmt.Printf("The liquigen configration are:\n%s\n", jsonz.Pretty(conf))
+}
