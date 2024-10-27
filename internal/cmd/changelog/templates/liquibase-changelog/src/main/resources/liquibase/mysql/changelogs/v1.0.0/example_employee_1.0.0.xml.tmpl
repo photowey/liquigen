@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.9.xsd">
+
+    <!-- https://docs.liquibase.com/change-types/nested-tags/column.html -->
+
+    <changeSet id="employee_20241010_001" author="photowey" dbms="mysql" context="dev,test,stage" labels="v1.0.0">
+        <comment>Initialize the table: employee</comment>
+
+        <createTable tableName="employee" remarks="Employee">
+            <column name="id" type="${type.bigint}(20)" remarks="Primary KEY" autoIncrement="false">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+
+            <column name="create_by" type="${type.bigint}(20)" remarks="Creator">
+                <constraints nullable="false"/>
+            </column>
+            <column name="update_by" type="${type.bigint}(20)" remarks="Updater">
+                <constraints nullable="false"/>
+            </column>
+            <column name="create_time" type="${type.timestamp}" remarks="Create time">
+                <constraints nullable="false"/>
+            </column>
+            <column name="update_time" type="${type.timestamp}" remarks="UpdateTime"
+                    defaultValueComputed="CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+            <column name="deleted" type="${type.tinyint}(2)" remarks="Deleted flag 0:init 1:deleted">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="employee_no" type="${type.varchar}(32)" remarks="Employee No.">
+                <constraints nullable="false"/>
+            </column>
+            <column name="org_id" type="${type.bigint}(20)" remarks="Organization ID">
+                <constraints nullable="false"/>
+            </column>
+            <column name="org_name" type="${type.varchar}(64)" remarks="Organization Name">
+                <constraints nullable="false"/>
+            </column>
+            <column name="sorted" type="${type.varchar}(32)" remarks="Sort No.">
+                <constraints nullable="false"/>
+            </column>
+            <column name="states" type="${type.int}(4)" remarks="Status">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="remark" type="${type.text}" remarks="Remark">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <modifySql dbms="mysql">
+            <replace replace="MODIFY COLUMN update_time timestamp"
+                     with="MODIFY COLUMN update_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP"/>
+        </modifySql>
+    </changeSet>
+</databaseChangeLog>
