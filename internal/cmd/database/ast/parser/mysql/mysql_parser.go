@@ -347,6 +347,7 @@ OUTER:
 					if tokenizer.Peek().Type == lexer.TokenCurrentTimestamp {
 						DefaultToken := tokenizer.Next()
 						column.Default = DefaultToken.Literal
+						column.UpdateTimestamp = true
 					}
 				}
 			case lexer.TokenComment:

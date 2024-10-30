@@ -14,40 +14,22 @@
  * limitations under the License.
  */
 
-package ast
+package types
 
-type Database struct {
-	Name   string
-	Tables []*Table
-}
-
-type Table struct {
-	Database string
-	Name     string
-	Comment  string
-	Columns  []*Column
-	Indexes  []*Index
-}
-
-type Column struct {
-	Name            string
-	DataType        string
-	Length          *int
-	Precision       *int
-	Scale           *int
-	NotNull         bool
-	AutoIncrement   bool
-	PrimaryKey      bool
-	ForeignKey      bool
-	Unique          bool
-	Unsigned        bool
-	Zerofill        bool
-	UpdateTimestamp bool
-	Default         string
-	Comment         string
-}
-
-type Index struct {
-	Name    string
-	Columns []string
-}
+const (
+	BIGINT    = "bigint"
+	TINYINT   = "tinyint"
+	SMALLINT  = "smallint"
+	MEDIUMINT = "mediumint"
+	INT       = "int"
+	FLOAT     = "float"
+	DOUBLE    = "double"
+	DECIMAL   = "decimal"
+	CHAR      = "char"
+	VARCHAR   = "varchar"
+	TEXT      = "text"
+	DATE      = "date"
+	TIME      = "time"
+	DATETIME  = "datetime"
+	TIMESTAMP = "timestamp"
+)

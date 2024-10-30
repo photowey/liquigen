@@ -21,7 +21,7 @@ import (
 	"testing"
 )
 
-func Test_parseTmpl(t *testing.T) {
+func Test_parseField(t *testing.T) {
 	type args struct {
 		tmpl string
 		ctx  *Column
@@ -35,7 +35,7 @@ func Test_parseTmpl(t *testing.T) {
 		{
 			name: "test Primary column",
 			args: args{
-				tmpl: PrimaryColumn,
+				tmpl: PrimaryTemplate,
 				ctx: &Column{
 					Name:          "id",
 					Type:          "bigint",
@@ -52,7 +52,7 @@ func Test_parseTmpl(t *testing.T) {
 		{
 			name: "test Bigint column",
 			args: args{
-				tmpl: BigintColumn,
+				tmpl: BigintTemplate,
 				ctx: &Column{
 					Name:          "user_id",
 					Type:          "bigint",
@@ -70,7 +70,7 @@ func Test_parseTmpl(t *testing.T) {
 		{
 			name: "test TinyInt column",
 			args: args{
-				tmpl: TinyIntColumn,
+				tmpl: TinyIntTemplate,
 				ctx: &Column{
 					Name:          "order_state",
 					Type:          "tinyint",
@@ -88,7 +88,7 @@ func Test_parseTmpl(t *testing.T) {
 		{
 			name: "test SmallInt column",
 			args: args{
-				tmpl: SmallIntColumn,
+				tmpl: SmallIntTemplate,
 				ctx: &Column{
 					Name:          "order_state",
 					Type:          "smallint",
@@ -106,7 +106,7 @@ func Test_parseTmpl(t *testing.T) {
 		{
 			name: "test MediumInt column",
 			args: args{
-				tmpl: MediumIntColumn,
+				tmpl: MediumIntTemplate,
 				ctx: &Column{
 					Name:          "order_state",
 					Type:          "smallint",
@@ -124,7 +124,7 @@ func Test_parseTmpl(t *testing.T) {
 		{
 			name: "test Int column",
 			args: args{
-				tmpl: IntColumn,
+				tmpl: IntTemplate,
 				ctx: &Column{
 					Name:          "member_count",
 					Type:          "smallint",
@@ -141,7 +141,7 @@ func Test_parseTmpl(t *testing.T) {
 		{
 			name: "test Float column",
 			args: args{
-				tmpl: FloatColumn,
+				tmpl: FloatTemplate,
 				ctx: &Column{
 					Name:          "price",
 					Type:          "float",
@@ -252,7 +252,7 @@ func Test_parseTmpl(t *testing.T) {
 		{
 			name: "test Date column",
 			args: args{
-				tmpl: DateColumn,
+				tmpl: DateTemplate,
 				ctx: &Column{
 					Name:          "create_date",
 					Type:          "date",
@@ -270,7 +270,7 @@ func Test_parseTmpl(t *testing.T) {
 		{
 			name: "test Time column",
 			args: args{
-				tmpl: TimeColumn,
+				tmpl: TimeTemplate,
 				ctx: &Column{
 					Name:          "create_time",
 					Type:          "time",
@@ -343,13 +343,13 @@ func Test_parseTmpl(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			got, err := parseTmpl(tt.args.tmpl, tt.args.ctx)
+			got, err := parseField(tt.args.ctx, tt.args.tmpl)
 			if (err != nil) != tt.wantErr {
-				t.Errorf("parseTmpl() error = %v, wantErr %v", err, tt.wantErr)
+				t.Errorf("parseField() error = %v, wantErr %v", err, tt.wantErr)
 				return
 			}
 			if !reflect.DeepEqual(got, tt.want) {
-				t.Errorf("parseTmpl() got = %v, want %v", got, tt.want)
+				t.Errorf("parseField() got = %v, want %v", got, tt.want)
 			}
 		})
 	}

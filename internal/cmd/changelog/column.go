@@ -19,25 +19,25 @@ package changelog
 // ----------------------------------------------------------------
 
 const (
-	PrimaryColumn = `<column name="{{ .Name }}" type="${type.{{ .Type }}}" remarks="{{ .Comment }}" autoIncrement="{{ .AutoIncrement }}">
+	PrimaryTemplate = `<column name="{{ .Name }}" type="${type.{{ .Type }}}" remarks="{{ .Comment }}" autoIncrement="{{ .AutoIncrement }}">
                 <constraints primaryKey="true" nullable="false"/>
             </column>`
-	BigintColumn = `<column name="{{ .Name }}" type="${type.bigint}" remarks="{{ .Comment }}" {{ .DefaultValue }}>
+	BigintTemplate = `<column name="{{ .Name }}" type="${type.bigint}" remarks="{{ .Comment }}" {{ .DefaultValue }}>
                 <constraints nullable="{{ .Nullable }}"/>
             </column>`
-	TinyIntColumn = `<column name="{{ .Name }}" type="${type.tinyint}" remarks="{{ .Comment }}" {{ .DefaultValue }}>
+	TinyIntTemplate = `<column name="{{ .Name }}" type="${type.tinyint}" remarks="{{ .Comment }}" {{ .DefaultValue }}>
                 <constraints nullable="{{ .Nullable }}"/>
             </column>`
-	SmallIntColumn = `<column name="{{ .Name }}" type="${type.smallint}" remarks="{{ .Comment }}" {{ .DefaultValue }}>
+	SmallIntTemplate = `<column name="{{ .Name }}" type="${type.smallint}" remarks="{{ .Comment }}" {{ .DefaultValue }}>
                 <constraints nullable="{{ .Nullable }}"/>
             </column>`
-	MediumIntColumn = `<column name="{{ .Name }}" type="${type.mediumint}" remarks="{{ .Comment }}" {{ .DefaultValue }}>
+	MediumIntTemplate = `<column name="{{ .Name }}" type="${type.mediumint}" remarks="{{ .Comment }}" {{ .DefaultValue }}>
                 <constraints nullable="{{ .Nullable }}"/>
             </column>`
-	IntColumn = `<column name="{{ .Name }}" type="${type.int}" remarks="{{ .Comment }}" {{ .DefaultValue }}>
+	IntTemplate = `<column name="{{ .Name }}" type="${type.int}" remarks="{{ .Comment }}" {{ .DefaultValue }}>
                 <constraints nullable="{{ .Nullable }}"/>
             </column>`
-	FloatColumn = `<column name="{{ .Name }}" type="${type.float}" remarks="{{ .Comment }}" {{ .DefaultValue }}>
+	FloatTemplate = `<column name="{{ .Name }}" type="${type.float}" remarks="{{ .Comment }}" {{ .DefaultValue }}>
                 <constraints nullable="{{ .Nullable }}"/>
             </column>`
 	DoubleColumn = `<column name="{{ .Name }}" type="${type.double}" remarks="{{ .Comment }}" {{ .DefaultValue }}>
@@ -55,10 +55,10 @@ const (
 	TextTemplate = `<column name="{{ .Name }}" type="${type.text}" remarks="{{ .Comment }}">
                 <constraints nullable="{{ .Nullable }}"/>
             </column>`
-	DateColumn = `<column name="{{ .Name }}" type="${type.date}" remarks="{{ .Comment }}" {{ .DefaultValue }}>
+	DateTemplate = `<column name="{{ .Name }}" type="${type.date}" remarks="{{ .Comment }}" {{ .DefaultValue }}>
                 <constraints nullable="{{ .Nullable }}"/>
             </column>`
-	TimeColumn = `<column name="{{ .Name }}" type="${type.time}" remarks="{{ .Comment }}" {{ .DefaultValue }}>
+	TimeTemplate = `<column name="{{ .Name }}" type="${type.time}" remarks="{{ .Comment }}" {{ .DefaultValue }}>
                 <constraints nullable="{{ .Nullable }}"/>
             </column>`
 	DatetimeTemplate = `<column name="{{ .Name }}" type="${type.datetime}" remarks="{{ .Comment }}" {{ .DefaultValue }}>
