@@ -118,18 +118,23 @@ func confirmInput(args *Args) {
 
 func validateInput(args *Args) {
 	validatePath(args)
+
 	validateAuthor(args)
 	validateVersion(args)
+
+	validateDialect(args)
 }
 
 // ----------------------------------------------------------------
 
+// Deprecated
 func reportSQL(args *Args) {
 	fmt.Printf("the SQL file is: \n%s\n", args.SQLFile)
 	fmt.Printf("the SQL file content is: \n%s\n", args.SQL)
 	fmt.Printf("the SQL file clean content is: \n%s\n", database.RemoveComments(args.SQL))
 }
 
+// Deprecated
 func report(args *Args) {
 	fmt.Printf("sql mode: the Author: [%s]\n", args.Author)
 	fmt.Printf("sql mode: the Email: [%s]\n", args.Email)

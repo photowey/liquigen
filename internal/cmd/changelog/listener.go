@@ -22,6 +22,7 @@ import (
 	"github.com/gookit/color"
 	"github.com/manifoldco/promptui"
 	"github.com/photowey/liquigen/configs"
+	"github.com/photowey/liquigen/internal/cmd/database/ast/parser/mysql"
 	"github.com/photowey/liquigen/pkg/stringz"
 )
 
@@ -38,6 +39,7 @@ var (
 	blue   = color.FgBlue.Render
 	yellow = color.FgYellow.Render
 	cyan   = color.FgCyan.Render
+	red    = color.FgRed.Render
 )
 
 var promptTemplates = &promptui.PromptTemplates{
@@ -145,5 +147,39 @@ func validateVersion(args *Args) {
 		}
 
 		args.Version = result
+	}
+}
+
+func validateDialect(args *Args) {
+	if stringz.IsBlankString(args.Dialect) {
+		project := configs.ConfigProject()
+
+		if stringz.IsNotBlankString(project.Dialect) {
+			args.Dialect = project.Dialect
+			return
+		}
+		validate := func(input string) error {
+			if stringz.IsBlankString(input) {
+				return fmt.Errorf("empty project's dialect")
+			}
+			return nil
+		}
+
+		prompt := promptui.Prompt{
+			Label:     "Dialect",
+			Validate:  validate,
+			Templates: promptTemplates,
+			Default:   mysql.Dialect,
+		}
+
+		result, err := prompt.Run()
+		if err != nil {
+			fmt.Printf("Please enter the correct dialect of project: %v\n", err)
+
+			// Loop
+			validateDialect(args)
+		}
+
+		args.Dialect = result
 	}
 }

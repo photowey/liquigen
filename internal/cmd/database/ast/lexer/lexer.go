@@ -72,6 +72,8 @@ const (
 	TokenBy
 
 	TokenCheck
+
+	TokenAlter
 )
 
 // ----------------------------------------------------------------
@@ -109,6 +111,7 @@ const (
 	TokenKeywordComma            = ","
 	TokenKeywordLeftParen        = "("
 	TokenKeywordRightParen       = ")"
+	TokenKeyAlter                = "ALTER"
 )
 
 // ----------------------------------------------------------------

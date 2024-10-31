@@ -22,11 +22,13 @@ type Database struct {
 }
 
 type Table struct {
-	Database string
-	Name     string
-	Comment  string
-	Columns  []*Column
-	Indexes  []*Index
+	Database        string
+	Name            string
+	Comment         string
+	CreateStatement bool
+	AlterStatement  bool
+	Columns         []*Column
+	Indexes         []*Index
 }
 
 type Column struct {

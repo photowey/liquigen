@@ -184,6 +184,7 @@ func doParseIfNecessary(ctx *Context, item, tmpl string) (string, error) {
 }
 
 func replaceSpace(content string) string {
+	content = strings.TrimSpace(content)
 	re := regexp.MustCompile(`\n{2,}`)
 	x := re.ReplaceAllString(content, "\n")
 

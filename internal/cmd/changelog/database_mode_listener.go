@@ -37,4 +37,6 @@ func OnDatabaseMode(args *Args) {
 	fmt.Printf("database mode: the Format: [%s]\n", args.Format)
 
 	fmt.Printf("database mode: the sqlFile: [%s]\n", args.SQLFile)
+
+	fmt.Printf(red("database mode: unsupported now"))
 }

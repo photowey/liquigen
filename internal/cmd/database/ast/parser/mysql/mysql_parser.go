@@ -33,6 +33,7 @@ const (
 	Dialect = "mysql"
 
 	CreateTableStatement = "CREATE TABLE"
+	DropTableStatement   = "DROP TABLE"
 )
 
 // ----------------------------------------------------------------
@@ -94,6 +95,11 @@ func parseSQL(sql string) (*ast.Database, []string, error) {
 			continue
 		}
 
+		// DROP TABLE ...
+		if strings.HasPrefix(strings.ToUpper(statement), DropTableStatement) {
+			continue
+		}
+
 		if !strings.HasPrefix(strings.ToUpper(statement), CreateTableStatement) {
 			return nil, nil, errors.New("bad create table SQL statements")
 		}
@@ -108,13 +114,23 @@ func parseSQL(sql string) (*ast.Database, []string, error) {
 			return nil, statements, err
 		}
 
+		if table.AlterStatement {
+			for _, tb := range tables {
+				if tb.Name == table.Name {
+					tb.Comment = stringz.RemoveQuotes(table.Comment)
+				}
+			}
+
+			continue
+		}
+
 		tables = append(tables, table)
 	}
 
 	databaseName := "Unknown"
 	if len(tables) > 0 {
 		if stringz.IsNotBlankString(tables[0].Database) {
-			databaseName = tables[0].Database
+			databaseName = stringz.RemoveQuotes(tables[0].Database)
 		}
 	}
 
@@ -216,6 +232,8 @@ func tokenize(sql string) ([]ast.Token, error) {
 			tokens = append(tokens, ast.Token{Type: lexer.TokenLeftParen, Literal: word})
 		case lexer.TokenKeywordRightParen:
 			tokens = append(tokens, ast.Token{Type: lexer.TokenRightParen, Literal: word})
+		case lexer.TokenKeyAlter:
+			tokens = append(tokens, ast.Token{Type: lexer.TokenAlter, Literal: word})
 		default:
 			if TestIsMySQLDataType(word) {
 				tokens = append(tokens, ast.Token{Type: lexer.TokenDataType, Literal: word})
@@ -231,7 +249,38 @@ func tokenize(sql string) ([]ast.Token, error) {
 }
 
 func tryParse(tokenizer *ast.Tokenizer) (*ast.Table, error) {
+	table := &ast.Table{
+		CreateStatement: true,
+		AlterStatement:  false,
+	}
+
+	// ALTER TABLE ...
+	// ALTER TABLE table_name COMMENT = 'comment';
+	if tokenizer.Peek().Type == lexer.TokenAlter {
+		tokenizer.Next() // ALTER
+		if tokenizer.HasNext() {
+			if tokenizer.Peek().Type == lexer.TokenTable {
+				tokenizer.Next() // TABLE
+
+				tab := tokenizer.Next() // table_name
+				table.Name = tab.Literal
+
+				tokenizer.Next() // COMMENT
+				tokenizer.Next() // =
+
+				cmt := tokenizer.Next()
+				table.Comment = stringz.RemoveQuotes(cmt.Literal)
+
+				table.AlterStatement = true
+				table.CreateStatement = false
+
+				return table, nil
+			}
+		}
+	}
+
 	// Maybe comments ...
+	// CREATE TABLE ...
 	for tokenizer.Peek().Type != lexer.TokenCreate {
 		tokenizer.Next()
 		if tokenizer.HasNotNext() {
@@ -257,8 +306,6 @@ OUTER:
 	if tokenizer.HasNotNext() {
 		return nil, errors.New("bad SQL statements")
 	}
-
-	table := &ast.Table{}
 
 	tokenizer.Next() //  TABLE
 

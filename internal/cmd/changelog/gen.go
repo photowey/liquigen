@@ -34,10 +34,9 @@ const (
 
 func gen(args *Args) {
 	doGenerate(args)
-	path := args.Path
-	cwd := args.Cwd
 
-	fmt.Println(yellow("File: generated ->"), cyan("$pwd"+path[len(cwd):]))
+	cwd := args.Cwd
+	fmt.Println(yellow("File: generated ->"), cyan("$pwd: "+cwd))
 }
 
 func doGenerate(args *Args) {
