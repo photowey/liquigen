@@ -16,10 +16,10 @@
         <comment>Initialize the table: {{- .Table.Name -}}</comment>
 
         <createTable tableName="{{- .Table.Name -}}" remarks="{{- .Table.Comment -}}">
-            {{range .Table.Columns }}
+            {{ range .Table.Columns }}
 
             {{- .PrimaryColumn }}
-            {{- .BigintColumn }}
+            {{- .BigintColumn -}}
 
             {{- .TinyIntColumn }}
             {{- .SmallIntColumn }}

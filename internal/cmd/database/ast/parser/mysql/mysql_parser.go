@@ -34,6 +34,7 @@ const (
 
 	CreateTableStatement = "CREATE TABLE"
 	DropTableStatement   = "DROP TABLE"
+	AlterTableStatement  = "ALTER TABLE"
 )
 
 // ----------------------------------------------------------------
@@ -83,6 +84,18 @@ func parse(sql string) (*ast.Ast, error) {
 	}, nil
 }
 
+func predicateIsDropTableStatement(statement string) bool {
+	return strings.HasPrefix(strings.ToUpper(statement), DropTableStatement)
+}
+
+func predicateIsCreateTableStatement(statement string) bool {
+	return strings.HasPrefix(strings.ToUpper(statement), CreateTableStatement)
+}
+
+func predicateIsAlterTableStatement(statement string) bool {
+	return strings.HasPrefix(strings.ToUpper(statement), AlterTableStatement)
+}
+
 func parseSQL(sql string) (*ast.Database, []string, error) {
 	sql = database.RemoveComments(sql)
 	statements := database.SplitSQLStatements(sql)
@@ -96,11 +109,14 @@ func parseSQL(sql string) (*ast.Database, []string, error) {
 		}
 
 		// DROP TABLE ...
-		if strings.HasPrefix(strings.ToUpper(statement), DropTableStatement) {
+		if predicateIsDropTableStatement(statement) {
 			continue
 		}
 
-		if !strings.HasPrefix(strings.ToUpper(statement), CreateTableStatement) {
+		// ALTER TABLE ...
+		if !predicateIsAlterTableStatement(statement) &&
+			// CREATE TABLE ...
+			!predicateIsCreateTableStatement(statement) {
 			return nil, nil, errors.New("bad create table SQL statements")
 		}
 
@@ -266,7 +282,6 @@ func tryParse(tokenizer *ast.Tokenizer) (*ast.Table, error) {
 				table.Name = tab.Literal
 
 				tokenizer.Next() // COMMENT
-				tokenizer.Next() // =
 
 				cmt := tokenizer.Next()
 				table.Comment = stringz.RemoveQuotes(cmt.Literal)

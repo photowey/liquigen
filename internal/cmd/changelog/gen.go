@@ -204,7 +204,7 @@ func primaryColumn(column *Column) string {
 }
 
 func bigintColumn(column *Column) string {
-	if column.testIsNotBigintColumn() {
+	if column.testIsNotBigintColumn() || column.testIsPrimaryColumn() {
 		return EmptyString
 	}
 	bytes, _ := parseField(column, BigintTemplate)
@@ -240,7 +240,7 @@ func mediumIntColumn(column *Column) string {
 }
 
 func intColumn(column *Column) string {
-	if column.testIsNotIntColumn() {
+	if column.testIsNotIntColumn() || column.testIsPrimaryColumn() {
 		return EmptyString
 	}
 	bytes, _ := parseField(column, IntTemplate)
@@ -258,7 +258,7 @@ func floatColumn(column *Column) string {
 }
 
 func doubleColumn(column *Column) string {
-	if column.testIsNotDatetimeColumn() {
+	if column.testIsNotDoubleColumn() {
 		return EmptyString
 	}
 	bytes, _ := parseField(column, DoubleColumn)

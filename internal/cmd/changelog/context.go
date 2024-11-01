@@ -177,7 +177,7 @@ func (c *Column) testIsDoubleColumn() bool {
 }
 
 func (c *Column) testIsNotDoubleColumn() bool {
-	return !c.testIsFloatColumn()
+	return !c.testIsDoubleColumn()
 }
 
 // ----------------------------------------------------------------
@@ -207,7 +207,7 @@ func (c *Column) testIsVarcharColumn() bool {
 }
 
 func (c *Column) testIsNotVarcharColumn() bool {
-	return !c.testIsCharColumn()
+	return !c.testIsVarcharColumn()
 }
 
 // ----------------------------------------------------------------
@@ -257,7 +257,7 @@ func (c *Column) testIsTimestampColumn() bool {
 }
 
 func (c *Column) testIsNotTimestampColumn() bool {
-	return !c.testIsDatetimeColumn()
+	return !c.testIsTimestampColumn()
 }
 
 // ----------------------------------------------------------------
